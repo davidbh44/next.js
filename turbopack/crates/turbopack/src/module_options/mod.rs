@@ -15,7 +15,7 @@ use turbo_tasks::{ResolvedVc, Vc};
 use turbo_tasks_fs::{FileSystemPath, glob::Glob};
 use turbopack_core::{
     chunk::SourceMapsType,
-    ident::LayerName,
+    ident::Layer,
     reference_type::{CssReferenceSubType, ReferenceType, UrlReferenceSubType},
     resolve::options::{ImportMap, ImportMapping},
 };
@@ -486,7 +486,7 @@ impl ModuleOptions {
                                     *execution_context,
                                     Some(import_map),
                                     None,
-                                    LayerName::new(rcstr!("postcss")),
+                                    Layer::new(rcstr!("postcss")),
                                     true,
                                 ),
                                 *execution_context,
@@ -671,7 +671,7 @@ impl ModuleOptions {
                                     *execution_context,
                                     Some(import_map),
                                     None,
-                                    LayerName::new(rcstr!("webpack_loaders")),
+                                    Layer::new(rcstr!("webpack_loaders")),
                                     false,
                                 ),
                                 *execution_context,

@@ -35,7 +35,7 @@ use turbopack_core::{
     compile_time_info::CompileTimeInfo,
     context::{AssetContext, ProcessResult},
     environment::{Environment, ExecutionEnvironment, NodeJsEnvironment},
-    ident::LayerName,
+    ident::Layer,
     issue::{IssueExt, StyledString, module::ModuleIssue},
     module::Module,
     output::OutputAsset,
@@ -318,7 +318,7 @@ pub struct ModuleAssetContext {
     pub compile_time_info: ResolvedVc<CompileTimeInfo>,
     pub module_options_context: ResolvedVc<ModuleOptionsContext>,
     pub resolve_options_context: ResolvedVc<ResolveOptionsContext>,
-    pub layer: LayerName,
+    pub layer: Layer,
     transition: Option<ResolvedVc<Box<dyn Transition>>>,
     /// Whether to replace external resolutions with CachedExternalModules. Used with
     /// ModuleOptionsContext.enable_externals_tracing to handle transitive external dependencies.
@@ -333,7 +333,7 @@ impl ModuleAssetContext {
         compile_time_info: ResolvedVc<CompileTimeInfo>,
         module_options_context: ResolvedVc<ModuleOptionsContext>,
         resolve_options_context: ResolvedVc<ResolveOptionsContext>,
-        layer: LayerName,
+        layer: Layer,
     ) -> Vc<Self> {
         Self::cell(ModuleAssetContext {
             transitions,
@@ -352,7 +352,7 @@ impl ModuleAssetContext {
         compile_time_info: ResolvedVc<CompileTimeInfo>,
         module_options_context: ResolvedVc<ModuleOptionsContext>,
         resolve_options_context: ResolvedVc<ResolveOptionsContext>,
-        layer: LayerName,
+        layer: Layer,
         transition: ResolvedVc<Box<dyn Transition>>,
     ) -> Vc<Self> {
         Self::cell(ModuleAssetContext {
@@ -372,7 +372,7 @@ impl ModuleAssetContext {
         compile_time_info: ResolvedVc<CompileTimeInfo>,
         module_options_context: ResolvedVc<ModuleOptionsContext>,
         resolve_options_context: ResolvedVc<ResolveOptionsContext>,
-        layer: LayerName,
+        layer: Layer,
     ) -> Vc<Self> {
         Self::cell(ModuleAssetContext {
             transitions,
@@ -692,7 +692,7 @@ async fn externals_tracing_module_context(ty: ExternalType) -> Result<Vc<ModuleA
         }
         .cell(),
         resolve_options.cell(),
-        LayerName::new(rcstr!("externals-tracing")),
+        Layer::new(rcstr!("externals-tracing")),
     ))
 }
 
@@ -703,7 +703,7 @@ impl AssetContext for ModuleAssetContext {
         *self.compile_time_info
     }
 
-    fn layer(&self) -> LayerName {
+    fn layer(&self) -> Layer {
         self.layer.clone()
     }
 
