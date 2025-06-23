@@ -128,11 +128,10 @@ impl ClientReferenceManifest {
                 .await?;
 
             async fn cached_chunk_paths(
-                cache: &mut FxHashMap<ResolvedVc<Box<dyn OutputAsset>>, ReadRef<FileSystemPath>>,
+                cache: &mut FxHashMap<ResolvedVc<Box<dyn OutputAsset>>, FileSystemPath>,
                 chunks: impl Iterator<Item = ResolvedVc<Box<dyn OutputAsset>>>,
-            ) -> Result<
-                impl Iterator<Item = (ResolvedVc<Box<dyn OutputAsset>>, ReadRef<FileSystemPath>)>,
-            > {
+            ) -> Result<impl Iterator<Item = (ResolvedVc<Box<dyn OutputAsset>>, FileSystemPath)>>
+            {
                 let results = chunks
                     .into_iter()
                     .map(|chunk| (chunk, cache.get(&chunk).cloned()))
@@ -158,11 +157,11 @@ impl ClientReferenceManifest {
             }
             let mut client_chunk_path_cache: FxHashMap<
                 ResolvedVc<Box<dyn OutputAsset>>,
-                ReadRef<FileSystemPath>,
+                FileSystemPath,
             > = FxHashMap::default();
             let mut ssr_chunk_path_cache: FxHashMap<
                 ResolvedVc<Box<dyn OutputAsset>>,
-                ReadRef<FileSystemPath>,
+                FileSystemPath,
             > = FxHashMap::default();
 
             for (client_reference_module, client_reference_module_ref) in
